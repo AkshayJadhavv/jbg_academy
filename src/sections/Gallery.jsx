@@ -84,23 +84,53 @@ export default function Gallery() {
 
   return (
     <>
-      <section id="gallery" className="relative py-28 px-6 bg-[#080808] overflow-hidden">
-        <div className="absolute top-0 left-0 right-0 h-px"
-          style={{ background: 'linear-gradient(90deg, transparent, #D4AF37, transparent)' }} />
-        <div className="absolute bottom-0 left-0 right-0 h-px"
-          style={{ background: 'linear-gradient(90deg, transparent, #D4AF37, transparent)' }} />
-        <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full blur-3xl opacity-[0.05] pointer-events-none"
-          style={{ background: 'radial-gradient(circle, #D4AF37, transparent)' }} />
-        <div className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full blur-3xl opacity-[0.04] pointer-events-none"
-          style={{ background: 'radial-gradient(circle, #D4AF37, transparent)' }} />
+      <section
+        id="gallery"
+        className="relative pt-10 pb-20 px-6 overflow-hidden"
+        style={{
+          background: '#080808',
+          backgroundImage: `
+            linear-gradient(rgba(212,175,55,0.035) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(212,175,55,0.035) 1px, transparent 1px)
+          `,
+          backgroundSize: '48px 48px',
+        }}
+      >
+        {/* Fade grid at top and bottom */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: 'linear-gradient(to bottom, #080808 0%, transparent 8%, transparent 92%, #080808 100%)',
+          }}
+        />
 
-        <div ref={ref} className="max-w-7xl mx-auto">
+        {/* Top divider — soft */}
+        <div
+          className="absolute top-0 left-0 right-0 h-px"
+          style={{ background: 'linear-gradient(90deg, transparent, rgba(212,175,55,0.2), transparent)' }}
+        />
+        {/* Bottom divider */}
+        <div
+          className="absolute bottom-0 left-0 right-0 h-px"
+          style={{ background: 'linear-gradient(90deg, transparent, #D4AF37, transparent)' }}
+        />
+
+        <div
+          className="absolute -top-40 -right-40 w-96 h-96 rounded-full blur-3xl opacity-[0.05] pointer-events-none"
+          style={{ background: 'radial-gradient(circle, #D4AF37, transparent)' }}
+        />
+        <div
+          className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full blur-3xl opacity-[0.04] pointer-events-none"
+          style={{ background: 'radial-gradient(circle, #D4AF37, transparent)' }}
+        />
+
+        <div ref={ref} className="relative max-w-7xl mx-auto">
 
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8 }}
-            className="text-center mb-16"
+            className="text-center mb-12"
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.85 }}
@@ -129,8 +159,10 @@ export default function Gallery() {
               </span>
             </h2>
 
-            <div className="w-24 h-0.5 mx-auto mb-6"
-              style={{ background: 'linear-gradient(90deg, transparent, #D4AF37, transparent)' }} />
+            <div
+              className="w-24 h-0.5 mx-auto mb-6"
+              style={{ background: 'linear-gradient(90deg, transparent, #D4AF37, transparent)' }}
+            />
 
             <p className="font-body text-lg text-white/55 max-w-2xl mx-auto">
               A visual journal of events, workshops, student work, campus moments, and educational journeys.
@@ -186,7 +218,8 @@ export default function Gallery() {
               <Images size={40} className="text-gold/20 mx-auto mb-4" />
               <p className="font-sans text-white/30 text-sm">No images in this category yet.</p>
               <p className="font-sans text-white/20 text-xs mt-2">
-                Add images to <code className="text-gold/40">public/images/gallery/</code> and update <code className="text-gold/40">galleryData.js</code>
+                Add images to <code className="text-gold/40">public/images/gallery/</code> and update{' '}
+                <code className="text-gold/40">galleryData.js</code>
               </p>
             </motion.div>
           )}
@@ -198,7 +231,10 @@ export default function Gallery() {
               transition={{ delay: 0.2 }}
               className="flex flex-col items-center gap-3 mt-12"
             >
-              <div className="w-48 h-0.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.06)' }}>
+              <div
+                className="w-48 h-0.5 rounded-full overflow-hidden"
+                style={{ background: 'rgba(255,255,255,0.06)' }}
+              >
                 <motion.div
                   className="h-full rounded-full"
                   style={{ background: 'linear-gradient(90deg, #D4AF37, #F0D060)' }}

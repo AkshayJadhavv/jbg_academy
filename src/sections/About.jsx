@@ -50,12 +50,29 @@ const mvw = [
 ];
 
 export default function About() {
-  // FIX 1 — lower threshold so animations trigger on mobile too
   const { ref, isVisible } = useScrollReveal(0.05);
   const { ref: mvRef, isVisible: mvVisible } = useScrollReveal(0.05);
 
   return (
-    <section id="about" className="relative py-16 md:py-28 px-4 md:px-6 overflow-hidden bg-[#050505]">
+    <section
+      id="about"
+      className="relative py-12 md:py-20 px-4 md:px-6 overflow-hidden"
+      style={{
+        background: '#050505',
+        backgroundImage: `
+          linear-gradient(rgba(212,175,55,0.035) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(212,175,55,0.035) 1px, transparent 1px)
+        `,
+        backgroundSize: '48px 48px',
+      }}
+    >
+      {/* Fade grid out at top and bottom edges */}
+      <div className="absolute inset-0 pointer-events-none"
+        style={{
+          background: 'linear-gradient(to bottom, #050505 0%, transparent 8%, transparent 92%, #050505 100%)',
+        }}
+      />
+
       {/* Background decoration */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24 bg-gradient-to-b from-transparent to-gold/30" />
       <div
@@ -63,14 +80,14 @@ export default function About() {
         style={{ background: 'radial-gradient(circle, #D4AF37, transparent)' }}
       />
 
-      <div ref={ref} className="max-w-7xl mx-auto">
+      <div ref={ref} className="relative max-w-7xl mx-auto">
 
         {/* ── Header ── */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="text-center mb-12 md:mb-20"
+          className="text-center mb-10 md:mb-16"
         >
           <p className="font-sans text-[10px] md:text-xs tracking-[0.4em] uppercase text-gold mb-4">
             Our Story
@@ -87,9 +104,8 @@ export default function About() {
         </motion.div>
 
         {/* ── Two-column layout ── */}
-        <div className="grid lg:grid-cols-2 gap-8 md:gap-16 items-center mb-16 md:mb-20">
+        <div className="grid lg:grid-cols-2 gap-8 md:gap-16 items-center mb-12 md:mb-16">
 
-          {/* FIX 2 — removed x:-50 slide on mobile, use y only */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
@@ -113,7 +129,6 @@ export default function About() {
             </div>
           </motion.div>
 
-          {/* FIX 2 — removed x:50 slide on mobile */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
@@ -177,7 +192,6 @@ export default function About() {
               <h4 className="font-display text-base md:text-lg font-semibold text-white mb-2 md:mb-3">
                 {f.title}
               </h4>
-              {/* FIX 3 — text-white/58 → text-white/60 (valid Tailwind class) */}
               <p className="font-body text-xs md:text-sm text-white/60 leading-relaxed">{f.desc}</p>
             </motion.div>
           ))}
@@ -186,13 +200,13 @@ export default function About() {
         {/* ══════════════════════════════════════
             WHO WE ARE · MISSION · VISION
         ══════════════════════════════════════ */}
-        <div ref={mvRef} className="mt-16 md:mt-28">
+        <div ref={mvRef} className="mt-12 md:mt-20">
 
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={mvVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7 }}
-            className="text-center mb-12 md:mb-16"
+            className="text-center mb-10 md:mb-14"
           >
             <div className="flex items-center justify-center gap-2 md:gap-4 mb-4 md:mb-6">
               <div className="h-px w-8 md:w-16 bg-gradient-to-r from-transparent to-gold/50" />
@@ -201,10 +215,13 @@ export default function About() {
               </p>
               <div className="h-px w-8 md:w-16 bg-gradient-to-l from-transparent to-gold/50" />
             </div>
-            <h2 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-4">
-              Who We Are &amp;{' '}
+
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl font-bold text-white mb-4 px-4 leading-tight">
+              Who We Are{' '}
+              <span className="text-gradient-gold italic">&amp;</span>{' '}
               <span className="text-gradient-gold italic">What We Stand For</span>
             </h2>
+
             <div className="section-divider" />
             <p className="font-body text-base md:text-lg text-white/55 max-w-xl mx-auto mt-6 leading-relaxed px-4">
               Creativity is not just a skill — it's a career. We are here to make that journey
@@ -213,7 +230,7 @@ export default function About() {
           </motion.div>
 
           {/* Mission / Vision / Who We Are cards */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-12 md:mb-16">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-10 md:mb-14">
             {mvw.map((item, i) => (
               <motion.div
                 key={item.label}
@@ -223,10 +240,8 @@ export default function About() {
                 whileHover={{ y: -4 }}
                 className={`glass-card rounded-2xl p-5 md:p-8 border ${item.border} relative overflow-hidden group cursor-default transition-all duration-500`}
               >
-                {/* Gradient wash on hover */}
                 <div className="absolute inset-0 bg-gradient-to-br from-gold/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-                {/* Icon pill */}
                 <div className="flex items-center gap-2 md:gap-3 mb-4 md:mb-6">
                   <div
                     className="w-8 h-8 md:w-10 md:h-10 rounded-lg flex items-center justify-center flex-shrink-0"
@@ -248,7 +263,6 @@ export default function About() {
 
                 <div className="w-8 md:w-10 h-px bg-gold/40 mb-3 md:mb-4" />
 
-                {/* FIX 3 — text-white/58 → text-white/60 */}
                 <p className="font-body text-xs md:text-sm text-white/60 leading-relaxed">{item.body}</p>
               </motion.div>
             ))}

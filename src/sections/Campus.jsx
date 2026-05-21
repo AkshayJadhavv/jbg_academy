@@ -1,24 +1,42 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useScrollReveal } from '../hooks/useScrollReveal';
-import { Play, X, Volume2, VolumeX } from 'lucide-react';
+import { VolumeX, Volume2 } from 'lucide-react';
 
 export default function Campus() {
   const { ref, isVisible } = useScrollReveal(0.15);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
 
   return (
-    <section className="relative py-28 px-6 bg-[#080808] overflow-hidden">
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent" />
+    <section
+      className="relative pt-8 pb-20 px-6 overflow-hidden"
+      style={{
+        background: '#080808',
+        backgroundImage: `
+          linear-gradient(rgba(212,175,55,0.035) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(212,175,55,0.035) 1px, transparent 1px)
+        `,
+        backgroundSize: '48px 48px',
+      }}
+    >
+      {/* Fade grid at top and bottom */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: 'linear-gradient(to bottom, #080808 0%, transparent 10%, transparent 88%, #080808 100%)',
+        }}
+      />
+
+      {/* Top divider — kept subtle, no hard break */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/20 to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent" />
 
-      <div ref={ref} className="max-w-6xl mx-auto">
+      <div ref={ref} className="relative max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
           <p className="font-sans text-xs tracking-[0.4em] uppercase text-gold mb-4">Virtual Tour</p>
           <h2 className="section-title text-white mb-4">
@@ -26,11 +44,12 @@ export default function Campus() {
           </h2>
           <div className="section-divider" />
           <p className="font-body text-lg text-white/60 max-w-xl mx-auto mt-6">
-            Step inside JBG Academy and discover world-class facilities designed to inspire creativity and foster professional growth.
+            Step inside JBG Academy and discover world-class facilities designed to inspire
+            creativity and foster professional growth.
           </p>
         </motion.div>
 
-        {/* Auto-playing YouTube Video - Always playing, no click needed */}
+        {/* Auto-playing YouTube Video */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={isVisible ? { opacity: 1, scale: 1 } : {}}
@@ -41,7 +60,6 @@ export default function Campus() {
             boxShadow: '0 0 60px rgba(212,175,55,0.1), 0 30px 80px rgba(0,0,0,0.5)',
           }}
         >
-          {/* YouTube Video Embed - Auto playing, no controls */}
           <div className="relative w-full aspect-video">
             <iframe
               className="absolute top-0 left-0 w-full h-full"
@@ -53,7 +71,7 @@ export default function Campus() {
             />
           </div>
 
-          {/* Custom Mute/Unmute Button */}
+          {/* Mute / Unmute */}
           <button
             onClick={() => setIsMuted(!isMuted)}
             className="absolute bottom-6 right-6 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 z-20"
@@ -70,9 +88,7 @@ export default function Campus() {
             )}
           </button>
 
-          {/* Overlay gradient for better text visibility */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/60 via-transparent to-transparent pointer-events-none" />
-
         </motion.div>
 
         {/* Bottom Grid Highlights */}
